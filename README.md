@@ -1,4 +1,34 @@
-# Úvod
+# EN
+The program is written in Java, and its main concept is BDD (Binary Decision Diagram), which consists of the following attributes:
+* int inputSize
+* int numberOfNodes
+* int maxDepth
+* Node root
+It contains the main methods:
+* BDD BDD_create(BF booleanFunction)
+* int BDD_reduce(BDD bdd)
+* char BDD_use(BDD bdd, String inputs)
+
+Additional structures in the program are the classes BF and Node.
+The BF class represents a Boolean function using a vector, which is implemented via a string.
+The Node class represents a single node of the BDD, as it is represented in the program as a binary tree. Each node contains depth, a given value, and references to the left and right child, as well as a reference to the parent. The parent reference is used when reducing duplicated nodes.
+The last part of the program is a tester (Main class), which randomly creates an input vector, generates a diagram, reduces duplicate nodes, and then tests all possible combinations of input variables. It evaluates the times for individual operations as well as the percentage success rate of the reduction.
+
+# Brief Description of the Algorithm
+## BDD_create
+The tree creation process takes place in a helper recursive method, which consists of two `if` conditions. The first `if` condition is for the left child and works by creating a new string that will contain the left half of the parent string, sets a pointer to the parent, and then follows with a recursive call. The second `if` works similarly for the right child. The function also sets the corresponding depth for each node and sets the maximum depth for the tree.
+
+## BDD_reduce
+First, the program takes all the leaves according to the maximum depth of the corresponding diagram (tree) and reduces them so that there is always only one node for `1` and one node for `0`. This is achieved by selecting the first found `1` and `0` as a pattern and redirecting all others to them. This step alone reduces the tree by approximately 50%, as the layer with the leaves is the largest and makes up about half of the diagram.
+
+Further reduction proceeds from bottom to top (from the leaves to the root), which is less efficient than reducing from the root, but since it is necessary to count how many nodes are removed, it is necessary to reduce step by step.
+Thus, the program gradually goes from the deepest layers to the root. In each layer, all corresponding nodes are checked and compared with each other. If a duplicate is found, references to the children are changed using the parent reference so that one of the duplicate nodes is eliminated, and Java's garbage collection takes care of the rest by removing the unused reference.
+
+## BDD_use
+This method traverses the diagram (tree) very simply based on the value of the corresponding variables. If the variable is `0`, it goes left; if the variable is `1`, it goes right. All variables are evaluated this way, but for correct evaluation, the depth must always match the order of the input variables to ensure the correct variable is being evaluated.
+
+
+# SK
 Program je vytvorený v jazyku Java a hlavná myšlienka je BDD (binary decision diagram), kt. pozostáva z atribútov: <br>
 * int inputSize
 * int numberOfNodes
